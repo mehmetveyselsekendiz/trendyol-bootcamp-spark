@@ -69,7 +69,7 @@ object ProductMergerJob {
       .filter(row=>data_filter(row)).drop("last_id").drop("last_timestamp").as[Product]
 
 
-    // Write updated data to snapshot_data
+    // Write updated data to snapshot_data folder
 
     snapshot_data
       .coalesce(1)
@@ -77,6 +77,7 @@ object ProductMergerJob {
       .format("json")
       .mode("overwrite")
       .save("data/homework/snapshot_data")
+
 
     /**
     * Find the latest version of each product in every run, and save it as snapshot.
