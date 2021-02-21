@@ -134,7 +134,7 @@ object DataFrameExamples {
       .filter($"event" === "addToCart")
       .select("userId", "timestamp")
       .withColumn("timestamp", ($"timestamp" / 1000).cast("timestamp")) // timestamp in millisecond format, convert second format
-      .withColumn("dailyTrunc", date_trunc("day", $"timestamp")) // convert millis to Timestamp format
+      //.withColumn("dailyTrunc", date("day", $"timestamp")) // convert millis to Timestamp format
       .groupBy($"dailyTrunc", $"userId")
       .agg(count("*") as "totalAddToCart")
       .orderBy($"totalAddToCart".desc)
@@ -152,7 +152,7 @@ object DataFrameExamples {
     val validEventTypes = List("addToCart", "favorite")
 
     clicks
-      .filter($"event".isInCollection(validEventTypes))
+     // .filter($"event".isInCollection(validEventTypes))
       .withColumn("boughtViewedProduct", condition)
       .where($"boughtViewedProduct")
       .select("userId", "productId", "timestamp")
